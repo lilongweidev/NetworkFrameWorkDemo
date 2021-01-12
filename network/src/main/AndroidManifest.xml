@@ -1,2 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.llw.network" />
+    package="com.llw.network" >
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application>
+        <activity android:name=".environment.NetworkEnvironmentActivity"/>
+    </application>
+
+</manifest>
+
+
