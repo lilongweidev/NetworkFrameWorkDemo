@@ -15,6 +15,7 @@ import com.llw.network.api.ApiService;
 import com.llw.network.bean.GankResponse;
 import com.llw.network.environment.NetworkEnvironmentActivity;
 import com.llw.network.observer.BaseObserver;
+import com.llw.network.utils.KLog;
 
 import java.util.List;
 
@@ -80,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
                      */
                     @Override
                     public void onFailure(Throwable e) {
+                        KLog.e("MainActivity",e.toString());
                         Toast.makeText(MainActivity.this, "访问失败", Toast.LENGTH_SHORT).show();
                     }
                 }));
