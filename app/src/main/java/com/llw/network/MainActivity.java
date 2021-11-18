@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.llw.network.api.ApiService;
-import com.llw.network.bean.GankResponse;
+import com.llw.network.bean.WallPaperResponse;
 import com.llw.network.environment.NetworkEnvironmentActivity;
 import com.llw.network.observer.BaseObserver;
 import com.llw.network.utils.KLog;
@@ -58,34 +58,25 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("CheckResult")
     private void requestNetwork() {
         NetworkApi.createService(ApiService.class)
-                .getList()
-                .compose(NetworkApi.applySchedulers(new BaseObserver<GankResponse>() {
-                    /**
-                     * 成功
-                     * @param gankResponse
-                     */
+                .getWallPaper()
+                .compose(NetworkApi.applySchedulers(new BaseObserver<WallPaperResponse>() {
                     @Override
-                    public void onSuccess(GankResponse gankResponse) {
-                        List<GankResponse.DataBean> data = gankResponse.getData();
-                        if (data != null && data.size() > 0) {
-                            String imgUrl = data.get(1).getImages().get(0);
+                    public void onSuccess(WallPaperResponse wallPaperResponse) {
+                        List<WallPaperResponse.ResBean.VerticalBean> vertical = wallPaperResponse.getRes().getVertical();
+                        if (vertical != null && vertical.size() > 0) {
+                            String imgUrl = vertical.get(0).getImg();
                             Glide.with(MainActivity.this).load(imgUrl).into(imageView);
-                        }else {
+                        } else {
                             Toast.makeText(MainActivity.this, "数据为空", Toast.LENGTH_SHORT).show();
                         }
                     }
 
-                    /**
-                     * 失败
-                     * @param e
-                     */
                     @Override
                     public void onFailure(Throwable e) {
-                        KLog.e("MainActivity",e.toString());
+                        KLog.e("MainActivity", e.toString());
                         Toast.makeText(MainActivity.this, "访问失败", Toast.LENGTH_SHORT).show();
                     }
                 }));
-
     }
 
     /**

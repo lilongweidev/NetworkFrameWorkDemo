@@ -1,6 +1,6 @@
 package com.llw.network.api;
 
-import com.llw.network.bean.GankResponse;
+import com.llw.network.bean.WallPaperResponse;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -13,9 +13,8 @@ import retrofit2.http.GET;
 public interface ApiService {
 
     /**
-     * 获取数据列表
-     * @return GankResponse
+     * 获取热门壁纸列表
      */
-    @GET("/api/v2/data/category/Girl/type/Girl/page/1/count/10")
-    Observable<GankResponse> getList();
+    @GET("/v1/vertical/vertical?limit=30&skip=180&adult=false&first=0&order=hot")
+    Observable<WallPaperResponse> getWallPaper();
 }
